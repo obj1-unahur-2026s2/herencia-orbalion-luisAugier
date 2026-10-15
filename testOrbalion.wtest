@@ -1,0 +1,217 @@
+import orbalion.*
+describe "check uno"{
+      test "no puede tener un rol distinto al FOZ" {
+    const pepe = new Entrenador(
+        cantidadCiclosSolares = 1,
+        estaEnCintonia = true,
+        nivelPrecisionEstrategica = 3
+    )
+
+    assert.throwsExceptionWithMessage("rol no homologado por la FOZ",{ pepe.asignar("algo") })
+}
+
+    test "un luminico tiene la misma energia base 2000"{
+        const lum = new Luminico(
+        nombre = "equipo uno",
+        nivelDeEnergiaBase = 2000,
+        entrenador = "pepe",
+        tecnologiasComplementarias = [],
+        nivelDeRadiacion = 5001 ,
+        nombresDeCristales = []
+        )
+        assert.equals(2000,lum.energiaTotal())
+}
+
+ test "un sintetico con 2000 de base y 6 modolus tiene energia total 1600"{
+        const sint = new Sintetico(
+        nombre = "equipo uno",
+        nivelDeEnergiaBase = 2000,
+        entrenador = "pepe",
+        tecnologiasComplementarias = [],
+        nivelDeProcesamientoCentral = 0,
+        cantidadModulosActivos = 6 ,
+        estaCertificado = true
+        )
+        assert.equals(1600, sint.energiaTotal())
+   
+}
+
+ test "un sintetico con 2000 de base y 4 modulos y 2 tecnologias que le aportan 100 c/u tiene energia total 2200"{
+        const eneruna = new TecnologiasEspeciales(
+              nombre = "pepe",
+              valorEnergetico = 100 ,
+              activa = true
+        )
+        const enerdos = new TecnologiasEspeciales(
+              nombre = "pepe",
+              valorEnergetico = 100 ,
+              activa = true
+        )
+        const sints = new Sintetico(
+        nombre = "equipo uno",
+        nivelDeEnergiaBase = 2000,
+        entrenador = "pepe",
+        tecnologiasComplementarias = [eneruna,enerdos],
+        nivelDeProcesamientoCentral = 0,
+        cantidadModulosActivos = 4 ,
+        estaCertificado = true
+        )
+        assert.equals(2200, sints.energiaTotal())
+   
+}
+
+   test "un estratega cuantico con 12 ciclos y precision de 90 es de elita"{
+    const pepe = new Entrenador(
+        cantidadCiclosSolares = 12 ,
+        estaEnCintonia = true,
+        nivelPrecisionEstrategica = 90
+        )
+        pepe.asignar(estrategiaCuantico)
+    
+     assert.that(pepe.esDeEliteGalactica())
+   }
+
+   test "un arquitecto de energia con sintonia con el equipo es de elite"{
+    const pepe = new Entrenador(
+        cantidadCiclosSolares = 11 ,
+        estaEnCintonia = false,
+        nivelPrecisionEstrategica = 9
+        )
+        pepe.asignar(arquitectoDeEnergia)
+    
+     assert.notThat(pepe.esDeEliteGalactica())
+   }
+
+   test "un guia mental  es de elite"{
+    const pepe = new Entrenador(
+        cantidadCiclosSolares = 15 ,
+        estaEnCintonia = true,
+        nivelPrecisionEstrategica = 9
+        )
+        pepe.asignar(guiaMental)
+    
+     assert.that(pepe.esDeEliteGalactica())
+   }
+
+   test "equipo luminico con 3 cristales y entrenador de elite y una actica es de prestigio"{
+    const pepe = new Entrenador(
+        cantidadCiclosSolares = 12 ,
+        estaEnCintonia = true,
+        nivelPrecisionEstrategica = 90
+        )
+        pepe.asignar(estrategiaCuantico)
+    const eneruna = new TecnologiasEspeciales(
+              nombre = "pepe",
+              valorEnergetico = 100 ,
+              activa = true
+        )    
+    
+    const lum = new Luminico(
+        nombre = "equipo uno",
+        nivelDeEnergiaBase = 2000,
+        entrenador = pepe,
+        tecnologiasComplementarias = [eneruna],
+        nivelDeRadiacion = 5001 ,
+        nombresDeCristales = ["uno","dos","tres"]
+        )
+        assert.that(lum.esDePrestigioUniversal())
+   }
+
+   test "equipo sintetico con 4 modulos y todas las energias activas es de prestigio"{
+    const pepe = new Entrenador(
+        cantidadCiclosSolares = 12 ,
+        estaEnCintonia = true,
+        nivelPrecisionEstrategica = 90
+        )
+        pepe.asignar(estrategiaCuantico)
+    const eneruna = new TecnologiasEspeciales(
+              nombre = "pepe",
+              valorEnergetico = 100 ,
+              activa = true
+        )    
+    
+    const sints = new Sintetico(
+        nombre = "equipo uno",
+        nivelDeEnergiaBase = 2000,
+        entrenador = "pepe",
+        tecnologiasComplementarias = [eneruna],
+        nivelDeProcesamientoCentral = 0,
+        cantidadModulosActivos = 4 ,
+        estaCertificado = true
+        )
+        assert.that(sints.esDePrestigioUniversal())
+   }
+
+    test "equipo sintetico con 3 modulos y todas las energias activas no  es de prestigio"{
+    const pepe = new Entrenador(
+        cantidadCiclosSolares = 12 ,
+        estaEnCintonia = true,
+        nivelPrecisionEstrategica = 90
+        )
+        pepe.asignar(estrategiaCuantico)
+    const eneruna = new TecnologiasEspeciales(
+              nombre = "pepe",
+              valorEnergetico = 100 ,
+              activa = true
+        )    
+    
+    const sints = new Sintetico(
+        nombre = "equipo uno",
+        nivelDeEnergiaBase = 2000,
+        entrenador = "pepe",
+        tecnologiasComplementarias = [eneruna],
+        nivelDeProcesamientoCentral = 0,
+        cantidadModulosActivos = 3 ,
+        estaCertificado = true
+        )
+        assert.notThat(sints.esDePrestigioUniversal())
+   }
+
+
+   test "eterico con 3 portales y fluctuacion  de 80 y 2 tecnologias activas es de prestigio "{
+    const eneruna = new TecnologiasEspeciales(
+              nombre = "pepe",
+              valorEnergetico = 100 ,
+              activa = true
+        )  
+    const enerdos = new TecnologiasEspeciales(
+              nombre = "pepe",
+              valorEnergetico = 100 ,
+              activa = true
+        )      
+    const pipo = new Eterico(
+    nombre = "pipos",
+    nivelDeEnergiaBase = 500 ,
+    entrenador = "pepe",
+    tecnologiasComplementarias = [eneruna,enerdos],
+    nivelDeFluctuacion = 80,
+    cantidadPortales = 3
+    )
+    assert.that(pipo.esDePrestigioUniversal())
+   }
+
+
+      test "primer eterico "{
+    const eneruna = new TecnologiasEspeciales(
+              nombre = "pepe",
+              valorEnergetico = 100 ,
+              activa = true
+        )  
+    const enerdos = new TecnologiasEspeciales(
+              nombre = "pepe",
+              valorEnergetico = 100 ,
+              activa = true
+        )      
+    const pipo = new Eterico(
+    nombre = "pipos",
+    nivelDeEnergiaBase = 800 ,
+    entrenador = "pepe",
+    tecnologiasComplementarias = [eneruna,enerdos],
+    nivelDeFluctuacion = 80,
+    cantidadPortales = 3
+    )
+    assert.equals(1150,pipo.energiaTotal())
+   }
+
+
+}
